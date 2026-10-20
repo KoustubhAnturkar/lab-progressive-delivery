@@ -24,16 +24,16 @@ function getUnleashConfig() {
 
 async function initializeFlags() {
   const config = getUnleashConfig();
-
-  // TODO: Construct the supplied Unleash provider with config and register it
-  // with OpenFeature, waiting until its initial flag data is ready.
   void config;
+
+  const unleashProvider = new UnleashProvider(config);
+
+  await OpenFeature.setProviderAndWait(unleashProvider);
 }
 
 async function getNewFlow() {
-  // TODO: Evaluate lab06-new-flow through the OpenFeature client with the safe
-  // boolean default required by the lab.
-  return false;
+  const flagValue = await client.getBooleanValue("lab06-new-flow", false);
+  return flagValue;
 }
 
 async function shutdownFlags() {
